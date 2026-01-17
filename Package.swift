@@ -8,13 +8,15 @@ let package = Package(
     .macOS(.v15)
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0")
+    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
+    .package(url: "https://github.com/weichsel/ZIPFoundation", from: "0.9.20"),
   ],
   targets: [
     .executableTarget(
       name: "pfw",
       dependencies: [
-        .product(name: "ArgumentParser", package: "swift-argument-parser")
+        .product(name: "ArgumentParser", package: "swift-argument-parser"),
+        .product(name: "ZIPFoundation", package: "ZIPFoundation")
       ]
     )
   ],

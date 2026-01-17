@@ -1,5 +1,6 @@
 import ArgumentParser
 import Foundation
+import ZIPFoundation
 
 struct Install: AsyncParsableCommand {
   static let configuration = CommandConfiguration(
@@ -10,7 +11,7 @@ struct Install: AsyncParsableCommand {
     case codex
     case claude
     var defaultInstallPath: URL {
-      URL(filePath: "~/.\(rawValue)/skills/")
+      URL(filePath: "~/.\(rawValue)/skills/the-point-free-way")
     }
   }
 
@@ -37,20 +38,12 @@ struct Install: AsyncParsableCommand {
         )!
       )
 
-    print(String.init(decoding: data, as: UTF8.self))
-    print("!!!")
+    let zipURL = URL.temporaryDirectory.appending(path: UUID().uuidString)
+    try data.write(to: zipURL)
 
     let installURL = URL(fileURLWithPath: path ?? tool.defaultInstallPath.path)
-
-    print("Installing skills for \(tool.rawValue) into \(installURL.path)")
-
-    try FileManager.default.createDirectory(at: installURL, withIntermediateDirectories: true)
-
-    // TODO: Replace this stub with a real download from Point-Free.
-    let stubFile = installURL.appendingPathComponent("README.txt")
-    let stubText = "Skills would be downloaded here for \(tool.rawValue).\n"
-    try stubText.write(to: stubFile, atomically: true, encoding: .utf8)
-
-    print("Installed stub skills. Replace with real download when API is ready.")
+    try FileManager.default.removeItem(at: installURL)
+    try FileManager.default.unzipItem(at: zipURL, to: installURL)
+    print("Installed skills for \(tool.rawValue) into \(installURL.path)")
   }
 }
