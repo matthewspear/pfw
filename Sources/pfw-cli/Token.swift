@@ -17,10 +17,8 @@ func machine() throws -> UUID {
 
 }
 
-let pfwDirectoryURL: URL = {
-  let home = FileManager.default.homeDirectoryForCurrentUser
-  return home.appendingPathComponent(".pfw", isDirectory: true)
-}()
+let pfwDirectoryURL = FileManager.default.homeDirectoryForCurrentUser
+  .appendingPathComponent(".pfw", isDirectory: true)
 
 let machineURL = pfwDirectoryURL.appendingPathComponent("machine")
 let tokenURL = pfwDirectoryURL.appendingPathComponent("token")
