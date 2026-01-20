@@ -49,8 +49,7 @@ struct Install: AsyncParsableCommand {
         return
       }
       print("Authentication failed. Starting login flow...")
-      let login = Login()
-      try await login.run()
+      try await performLogin(token: nil)
       print("Login complete. Retrying install...")
       try await install(shouldRetryAfterLogin: false)
       return

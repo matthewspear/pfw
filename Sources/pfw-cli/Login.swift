@@ -12,46 +12,46 @@ struct Login: AsyncParsableCommand {
   )
 
   @Option(help: "Paste the token received from the browser redirect.")
-  var token: String?
-
-  init() {
-    self.token = nil
-  }
+  var token: String? = nil
 
   func run() async throws {
-    if let token {
-      try save(token: token)
-      print("Saved token to \(tokenURL.path).")
-      return
-    }
-
-    #if canImport(Network)
-      let server = try LocalAuthServer()
-      let redirectURL = try await server.start()
-      let loginURL = try makeLoginURL(redirectURL: redirectURL)
-      print("Open this URL to log in and approve access:")
-      print(loginURL.absoluteString)
-      try openInBrowser(loginURL)
-
-      print("\nWaiting for browser redirect...")
-      let receivedToken = try await server.waitForToken()
-      try save(token: receivedToken)
-      print("Saved token to \(tokenURL.path).")
-    #else
-      let loginURL = makeLoginURL(redirectURL: nil)
-      print("Open this URL to log in and approve access:")
-      print(loginURL.absoluteString)
-      try openInBrowser(loginURL)
-
-      print("\nAfter approving, paste the token from the redirect URL here:")
-      if let line = readLine(strippingNewline: true), !line.isEmpty {
-        try save(token: line)
-        print("Saved token to \(storeURL.path).")
-      } else {
-        print("No token entered. You can run `pfw login --token <token>` later.")
-      }
-    #endif
+    try await performLogin(token: token)
   }
+}
+
+func performLogin(token: String?) async throws {
+  if let token {
+    try save(token: token)
+    print("Saved token to \(tokenURL.path).")
+    return
+  }
+
+  #if canImport(Network)
+    let server = try LocalAuthServer()
+    let redirectURL = try await server.start()
+    let loginURL = try makeLoginURL(redirectURL: redirectURL)
+    print("Open this URL to log in and approve access:")
+    print(loginURL.absoluteString)
+    try openInBrowser(loginURL)
+
+    print("\nWaiting for browser redirect...")
+    let receivedToken = try await server.waitForToken()
+    try save(token: receivedToken)
+    print("Saved token to \(tokenURL.path).")
+  #else
+    let loginURL = makeLoginURL(redirectURL: nil)
+    print("Open this URL to log in and approve access:")
+    print(loginURL.absoluteString)
+    try openInBrowser(loginURL)
+
+    print("\nAfter approving, paste the token from the redirect URL here:")
+    if let line = readLine(strippingNewline: true), !line.isEmpty {
+      try save(token: line)
+      print("Saved token to \(storeURL.path).")
+    } else {
+      print("No token entered. You can run `pfw login --token <token>` later.")
+    }
+  #endif
 }
 
 func openInBrowser(_ url: URL) throws {
@@ -77,7 +77,7 @@ func makeLoginURL(redirectURL: URL?) throws -> URL {
   components.path = "/account/the-way/login"
   var items = [
     URLQueryItem(name: "whoami", value: whoAmI()),
-    URLQueryItem(name: "machine", value: try machine().uuidString)
+    URLQueryItem(name: "machine", value: try machine().uuidString),
   ]
   if let redirectURL {
     items.append(URLQueryItem(name: "redirect", value: redirectURL.absoluteString))
