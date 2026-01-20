@@ -2,6 +2,10 @@ import ArgumentParser
 import Foundation
 import ZIPFoundation
 
+#if canImport(FoundationNetworking)
+  import FoundationNetworking
+#endif
+
 struct Install: AsyncParsableCommand {
   static let configuration = CommandConfiguration(
     abstract: "Download and install Point-Free Way skills."
