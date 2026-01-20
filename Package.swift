@@ -1,9 +1,9 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
-  name: "pfw-cli",
+  name: "pfw",
   platforms: [
     .macOS(.v15)
   ],
