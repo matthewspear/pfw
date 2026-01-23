@@ -42,7 +42,8 @@ struct Install: AsyncParsableCommand {
     let (data, response) = try await URLSession.shared
       .data(
         from: URL(
-          string: "\(URL.baseURL)/account/the-way/download?token=\(token)&machine=\(machine)&whoami=\(whoami)"
+          string:
+            "\(URL.baseURL)/account/the-way/download?token=\(token)&machine=\(machine)&whoami=\(whoami)"
         )!
       )
 

@@ -1,30 +1,25 @@
-> [!NOTE]
-> Nothing to see here yet.
-
-<!--
 # The Point-Free Way CLI
 
-A CLI tool for downloading and managing Point-Free Way skills.
+A CLI tool for downloading and managing [Point-Free Way](https://www.pointfree.co/the-way) skills.
 
 ## Quick start
 
-### Installing the CLI
+1. Install the CLI
 
-Install globally on your system using Homebrew:
+    Install globally on your system using Homebrew:
 
-```
-brew install pfw
-```
+    ```sh
+    $ brew install pointfreeco/tap/pfw
+    ```
 
-### Log into your Point-Free account
+2. Log into your Point-Free account
 
-```
-pfw login
-```
+    ```sh
+    $ pfw login
+    ```
 
-### Download the newest Point-Free Way skills
+3. Download the newest Point-Free Way skills
 
-```
-pfw install
-```
--->
+    ```sh
+    $ pfw install
+    ```

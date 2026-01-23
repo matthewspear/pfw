@@ -3,8 +3,7 @@ import Foundation
 
 func machine() throws -> UUID {
   try FileManager.default.createDirectory(at: pfwDirectoryURL, withIntermediateDirectories: true)
-  if
-    let currentMachineData = try? Data(contentsOf: machineURL),
+  if let currentMachineData = try? Data(contentsOf: machineURL),
     let currentMachine = UUID(uuidString: String(decoding: currentMachineData, as: UTF8.self))
   {
     return currentMachine
