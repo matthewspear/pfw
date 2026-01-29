@@ -18,7 +18,8 @@ struct List: ParsableCommand {
     }
 
     let skillDirectories = (try? fileSystem.contentsOfDirectory(at: centralSkillsURL)) ?? []
-    let skills = skillDirectories
+    let skills =
+      skillDirectories
       .map { $0.lastPathComponent }
       .sorted()
 
