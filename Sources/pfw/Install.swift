@@ -182,8 +182,8 @@ struct Install: AsyncParsableCommand {
 
       let skillDirectories = (try? fileSystem.contentsOfDirectory(at: skillsSourceURL)) ?? []
       for directory in skillDirectories {
-      guard directory.lastPathComponent != "commit-messages.json"
-      else { continue }
+        guard directory.lastPathComponent != "commit-messages.json"
+        else { continue }
         let centralDestination = centralSkillsURL.appendingPathComponent(
           directory.lastPathComponent)
         try fileSystem.moveItem(at: directory, to: centralDestination)
@@ -226,8 +226,7 @@ struct Install: AsyncParsableCommand {
     }
 
     let commitMessagesURL = skillsSourceURL.appendingPathComponent("commit-messages.json")
-    if
-      let commitMessages = loadCommitMessages(from: commitMessagesURL, fileSystem: fileSystem),
+    if let commitMessages = loadCommitMessages(from: commitMessagesURL, fileSystem: fileSystem),
       !commitMessages.isEmpty
     {
       print("")

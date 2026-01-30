@@ -883,7 +883,7 @@ extension BaseSuite {
           """
           Installed skills:
             • codex: /Users/blob/.codex/skills
-          
+
           Changes since last install:
             • Added database migration guidance
             • Added TCA2.0
