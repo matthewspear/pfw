@@ -180,7 +180,7 @@ extension BaseSuite {
       @Test(
         .dependencies {
           $0.gitHub = InMemoryGitHub(tags: [
-            GitHubTag(name: "pfw-9999.0.0"),
+            GitHubTag(name: "pfw-9999.0.0")
           ])
         }
       )

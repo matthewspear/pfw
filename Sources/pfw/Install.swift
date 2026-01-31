@@ -84,13 +84,14 @@ struct Install: AsyncParsableCommand {
     try await install(shouldRetryAfterLogin: true)
     do {
       let tags = try await gitHub.fetchTags(owner: "pointfreeco", repo: "homebrew-tap")
-      let mostRecentTag = tags
+      let mostRecentTag =
+        tags
         .first { $0.name.hasPrefix("pfw-") }
         .map { String($0.name.dropFirst(4)) }
       if let mostRecentTag, mostRecentTag != PFW.configuration.version {
         print(
           """
-          
+
           pfw \(mostRecentTag) is available. Run 'brew update && brew upgrade pfw' to install.
           """
         )
